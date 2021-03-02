@@ -5,6 +5,26 @@ body {
 	@include euiHeaderAffordForFixed(95px);
 }
 
+// .dashPanel,
+// .dashPanel--loading {
+// 	transition: background-color $euiAnimSpeedNormal $euiAnimSlightResistance,
+// 		box-shadow $euiAnimSpeedNormal $euiAnimSlightResistance;
+// 	-webkit-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Safari, Chrome and Opera > 12.1 */
+// 	-moz-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Firefox < 16 */
+// 	-ms-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Internet Explorer */
+// 	-o-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Opera < 12.1 */
+// 	animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance;
+// }
+
+@keyframes fadein {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 .dashPanel .actionMenuButton {
 	display: none;
 }
@@ -20,6 +40,6 @@ body {
 	transition: border-color $euiAnimSpeedFast $euiAnimSlightResistance;
 
 	&:hover {
-		border: solid 2px rgba($euiColorLightShade, 1);
+		border: solid 2px rgba($euiColorMediumShade, 1);
 	}
 }
