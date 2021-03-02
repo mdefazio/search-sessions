@@ -1,0 +1,25 @@
+@import "~@elastic/eui/dist/eui_theme_amsterdam_light.css";
+@import "~@elastic/eui/src/themes/eui-amsterdam/eui_amsterdam_globals.scss";
+
+body {
+	@include euiHeaderAffordForFixed(95px);
+}
+
+.dashPanel .actionMenuButton {
+	display: none;
+}
+.dashPanel:hover .actionMenuButton,
+.euiPopover-isOpen.actionMenuButton {
+	display: block !important;
+}
+
+.editMode .dashPanel {
+	box-shadow: none;
+	border: solid 2px rgba($euiColorLightShade, 0.4);
+
+	transition: border-color $euiAnimSpeedFast $euiAnimSlightResistance;
+
+	&:hover {
+		border: solid 2px rgba($euiColorLightShade, 1);
+	}
+}
