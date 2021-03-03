@@ -54,7 +54,7 @@ const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
 		setTimeout(() => {
 			setComplete(true);
 		}, timing);
-	}, [complete]);
+	});
 
 	if (loading) {
 		return (
@@ -165,9 +165,6 @@ function App() {
 			<EuiFlexGroup direction="column" gutterSize={dashGutters}>
 				<EuiFlexItem>
 					<EuiFlexGroup gutterSize={dashGutters}>
-						<EuiFlexItem>
-							<DashPanel timing={5000} />
-						</EuiFlexItem>
 						<EuiFlexItem grow={1}>
 							<DashPanel panelTitle="panel 1" timing={8000} />
 						</EuiFlexItem>
@@ -197,6 +194,9 @@ function App() {
 				</EuiFlexItem>
 				<EuiFlexItem>
 					<EuiFlexGroup gutterSize={dashGutters}>
+						<EuiFlexItem>
+							<DashPanel timing={50000} />
+						</EuiFlexItem>
 						<EuiFlexItem>
 							<DashPanel timing={2300} />
 						</EuiFlexItem>

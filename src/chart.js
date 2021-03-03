@@ -5,30 +5,31 @@ const euiTheme = EUI_CHARTS_THEME_LIGHT.theme;
 
 const ExampleChart = () => {
 	return (
-		<Chart size={{ height: 200 }}>
-			<Settings
-				theme={euiTheme}
-				showLegend={true}
-				legendPosition="right"
-				showLegendDisplayValue={false}
-			/>
-			<BarSeries
-				id="bars"
-				data={[
-					{ x: 0, y: 2 },
-					{ x: 1, y: 7 },
-					{ x: 2, y: 3 },
-					{ x: 3, y: 6 },
-				]}
-				name="Simple bar series"
-				xScaleType={ScaleType.Linear}
-				yScaleType={ScaleType.Linear}
-				xAccessor="x"
-				yAccessors={["y"]}
-			/>
-			<Axis id="bottom-axis" position="bottom" />
-			<Axis id="left-axis" position="left" showGridLines />
-		</Chart>
+		<div>
+			<Chart size={{ height: 200 }}>
+				<Settings
+					theme={euiTheme}
+					showLegend={true}
+					legendPosition="right"
+					showLegendDisplayValue={true}
+				/>
+				<BarSeries
+					id="bars"
+					name="Simple bar series"
+					xScaleType={ScaleType.Ordinal}
+					data={[
+						{ x: "trousers", y: 390, val: 1222 },
+						{ x: "watches", y: 23, val: 1222 },
+						{ x: "bags", y: 750, val: 1222 },
+						{ x: "cocktail dresses", y: 854, val: 1222 },
+					]}
+					xAccessor="x"
+					yAccessors={["y"]}
+				/>
+				<Axis id="bottom-axis" position="bottom" />
+				<Axis id="left-axis" position="left" showGridLines />
+			</Chart>
+		</div>
 	);
 };
 

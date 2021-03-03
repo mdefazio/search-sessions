@@ -5,16 +5,16 @@ body {
 	@include euiHeaderAffordForFixed(95px);
 }
 
-// .dashPanel,
-// .dashPanel--loading {
-// 	transition: background-color $euiAnimSpeedNormal $euiAnimSlightResistance,
-// 		box-shadow $euiAnimSpeedNormal $euiAnimSlightResistance;
-// 	-webkit-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Safari, Chrome and Opera > 12.1 */
-// 	-moz-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Firefox < 16 */
-// 	-ms-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Internet Explorer */
-// 	-o-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Opera < 12.1 */
-// 	animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance;
-// }
+.dashPanel,
+.dashPanel--loading {
+	transition: background-color $euiAnimSpeedNormal $euiAnimSlightResistance,
+		box-shadow $euiAnimSpeedNormal $euiAnimSlightResistance;
+	-webkit-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Safari, Chrome and Opera > 12.1 */
+	-moz-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Firefox < 16 */
+	-ms-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Internet Explorer */
+	-o-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Opera < 12.1 */
+	animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance;
+}
 
 @keyframes fadein {
 	from {
@@ -42,4 +42,12 @@ body {
 	&:hover {
 		border: solid 2px rgba($euiColorMediumShade, 1);
 	}
+}
+
+.euiProgress--customColor {
+	background-color: $euiColorLightestShade;
+}
+
+.euiProgress--customColor.euiProgress--indeterminate:before {
+	background-color: $euiColorLightShade !important;
 }
