@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Axis, BarSeries, Chart, Settings, ScaleType } from "@elastic/charts";
 import "@elastic/charts/dist/theme_only_light.css";
 
-const ExampleChart = ({ data1, data2, timing }) => {
-	const [useData, setUseData] = useState(data1);
-	setTimeout(() => setUseData(data2), 0.9 * timing);
+const ExampleChart = ({ data }) => {
 	return (
 		<div>
 			<Chart size={{ height: 200 }}>
@@ -13,7 +11,7 @@ const ExampleChart = ({ data1, data2, timing }) => {
 					id="bars"
 					name="Simple bar series"
 					xScaleType={ScaleType.Ordinal}
-					data={useData}
+					data={data}
 					xAccessor="x"
 					yAccessors={["y"]}
 				/>

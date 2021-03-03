@@ -5,21 +5,67 @@ import {
 	EuiFlexItem,
 	EuiLoadingChart,
 	EuiText,
+	EuiProgress,
 } from "@elastic/eui";
 
 import ExampleChart from "./panelChart";
 import PanelActionMenu from "./panelActionMenu";
 
+const data0 = [
+	{ x: "trousers", y: 0, val: 1222 },
+	{ x: "watches", y: 0, val: 1222 },
+	{ x: "bags", y: 0, val: 1222 },
+	{ x: "cocktail dresses", y: 0, val: 1222 },
+];
+
+const data1 = [
+	{ x: "trousers", y: 190, val: 1222 },
+	{ x: "watches", y: 4, val: 1222 },
+	{ x: "bags", y: 123, val: 1222 },
+	{ x: "cocktail dresses", y: 124, val: 1222 },
+];
+
+const data2 = [
+	{ x: "trousers", y: 390, val: 1222 },
+	{ x: "watches", y: 23, val: 1222 },
+	{ x: "bags", y: 750, val: 1222 },
+	{ x: "cocktail dresses", y: 854, val: 1222 },
+];
+
+const data3 = [
+	{ x: "trousers", y: 260, val: 1222 },
+	{ x: "watches", y: 64, val: 1222 },
+	{ x: "bags", y: 827, val: 1222 },
+	{ x: "cocktail dresses", y: 702, val: 1222 },
+];
+
+const dataSet = [data0, data1, data2, data3];
+
 const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
 	const [complete, setComplete] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [currentData, setCurrentData] = useState(0);
 
 	useEffect(() => {
-		setTimeout(() => setLoading(false), timing / 2.5);
-		setTimeout(() => {
-			setComplete(true);
-		}, timing);
-	});
+		let loading, switchData, complete;
+		loading = setTimeout(() => setLoading(false), timing / 2);
+
+		if (!loading) {
+			clearTimeout(loading);
+		}
+
+		// Switch through dataset every {timing} interval
+		if (currentData < dataSet.length - 1) {
+			switchData = setTimeout(() => setCurrentData(currentData + 1), timing);
+		} else {
+			complete = setTimeout(() => setComplete(true), timing);
+		}
+
+		return () => {
+			clearTimeout(switchData);
+			clearTimeout(complete);
+		};
+	}, [currentData, timing]);
 
 	if (loading) {
 		return (
@@ -42,20 +88,6 @@ const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
 			</EuiPanel>
 		);
 	}
-
-	const data1 = [
-		{ x: "trousers", y: 190, val: 1222 },
-		{ x: "watches", y: 4, val: 1222 },
-		{ x: "bags", y: 123, val: 1222 },
-		{ x: "cocktail dresses", y: 124, val: 1222 },
-	];
-
-	const data2 = [
-		{ x: "trousers", y: 390, val: 1222 },
-		{ x: "watches", y: 23, val: 1222 },
-		{ x: "bags", y: 750, val: 1222 },
-		{ x: "cocktail dresses", y: 854, val: 1222 },
-	];
 
 	return (
 		<EuiPanel
@@ -83,10 +115,10 @@ const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
 			</EuiFlexGroup>
 			<EuiFlexGroup alignItems="stretch" style={{ height: "100%" }}>
 				<EuiFlexItem>
-					{!complete ? null : (
+					{loading ? null : (
 						<EuiPanel color="plain" borderRadius="none" hasShadow={false}>
 							<EuiText color="subdued">
-								<ExampleChart timing={timing} data1={data1} data2={data2} />
+								<ExampleChart timing={timing} data={dataSet[currentData]} />
 							</EuiText>
 						</EuiPanel>
 					)}
