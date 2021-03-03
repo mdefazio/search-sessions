@@ -1,121 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.scss";
 
 import {
 	EuiPage,
 	EuiFlexGroup,
 	EuiFlexItem,
-	EuiPanel,
-	EuiButtonIcon,
-	EuiText,
-	EuiPopover,
 	EuiButton,
-	EuiProgress,
 	EuiLoadingChart,
 } from "@elastic/eui";
-import ExampleChart from "./chart";
 
-const dashGutters = "s";
+import DashPanel from "./panel/dashPanel";
 
-const DashPanelActionMenu = ({ mode }) => {
-	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
-	const onButtonClick = () =>
-		setIsPopoverOpen((isPopoverOpen) => !isPopoverOpen);
-	const closePopover = () => setIsPopoverOpen(false);
-
-	const ActionMenuButton = (
-		<EuiButtonIcon
-			iconType="boxesHorizontal"
-			onClick={onButtonClick}
-			aria-label="Action menu"
-		/>
-	);
-
-	return (
-		<EuiPopover
-			ownFocus
-			button={ActionMenuButton}
-			isOpen={isPopoverOpen}
-			closePopover={closePopover}
-			className="actionMenuButton"
-		>
-			Action menu here...
-		</EuiPopover>
-	);
-};
-
-const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
-	const [complete, setComplete] = useState(false);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		setTimeout(() => setLoading(false), timing / 2.5);
-		setTimeout(() => {
-			setComplete(true);
-		}, timing);
-	});
-
-	if (loading) {
-		return (
-			<EuiPanel
-				color="plain"
-				borderRadius="none"
-				hasShadow={false}
-				paddingSize="l"
-				className="dashPanel--loading"
-			>
-				<EuiFlexGroup alignItems="center" justifyContent="center">
-					<EuiFlexItem grow style={{ textAlign: "center" }}>
-						<EuiLoadingChart size="m" mono />
-					</EuiFlexItem>
-				</EuiFlexGroup>
-			</EuiPanel>
-		);
-	}
-
-	return (
-		<EuiPanel
-			hasShadow={hasShadow}
-			paddingSize="s"
-			className="dashPanel"
-			style={{
-				position: "relative",
-				overflow: "hidden",
-				minHeight: "15vh",
-			}}
-		>
-			{complete ? null : (
-				<EuiProgress size="xs" color="text" position="absolute" />
-			)}
-			<EuiFlexGroup alignItems="center" style={{ height: "44px" }}>
-				<EuiFlexItem grow={true}>
-					<EuiText size="xs">
-						<h4>{panelTitle}</h4>
-					</EuiText>
-				</EuiFlexItem>
-				<EuiFlexItem grow={false}>
-					<DashPanelActionMenu />
-				</EuiFlexItem>
-			</EuiFlexGroup>
-			<EuiFlexGroup>
-				<EuiFlexItem>
-					{!complete ? null : (
-						<EuiPanel color="subdued" borderRadius="none" hasShadow={false}>
-							<EuiText color="subdued">
-								<ExampleChart />
-							</EuiText>
-						</EuiPanel>
-					)}
-				</EuiFlexItem>
-			</EuiFlexGroup>
-		</EuiPanel>
-	);
-};
+const DASHGUTTERS = "s";
 
 function App() {
-	const [isEditing, setIsEditing] = useState(false);
+	/* States to consider
+  // Page reload: Reloads all components
+  // Data reload: A new query is made and reloads data within panels and progresses as results come in
+  // Auto reload: Data remains in panel, but shows as loading, switches when complete.
+  // Edit mode: Panel styling different
+  */
+
 	const [isReloading, setIsReloading] = useState(true);
+	const [isDataLoading, setIsDataLoading] = useState(true);
+	const [isEditing, setIsEditing] = useState(false);
 
 	const onEditClick = () => setIsEditing((isEditing) => !isEditing);
 	const onReloadClick = () => setIsReloading((isReloading) => !isReloading);
@@ -129,7 +37,7 @@ function App() {
 			</EuiFlexItem>
 			<EuiFlexItem grow={false}>
 				<EuiButton
-					onClick={onEditClick}
+					onClick={onReloadClick}
 					fill={isEditing}
 					color="secondary"
 					size="s"
@@ -162,9 +70,9 @@ function App() {
 		}
 
 		return (
-			<EuiFlexGroup direction="column" gutterSize={dashGutters}>
+			<EuiFlexGroup direction="column" gutterSize={DASHGUTTERS}>
 				<EuiFlexItem>
-					<EuiFlexGroup gutterSize={dashGutters}>
+					<EuiFlexGroup gutterSize={DASHGUTTERS}>
 						<EuiFlexItem grow={1}>
 							<DashPanel panelTitle="panel 1" timing={8000} />
 						</EuiFlexItem>
@@ -180,7 +88,7 @@ function App() {
 					</EuiFlexGroup>
 				</EuiFlexItem>
 				<EuiFlexItem>
-					<EuiFlexGroup gutterSize={dashGutters}>
+					<EuiFlexGroup gutterSize={DASHGUTTERS}>
 						<EuiFlexItem>
 							<DashPanel panelTitle="panel 5" timing={1900} />
 						</EuiFlexItem>
@@ -193,9 +101,9 @@ function App() {
 					</EuiFlexGroup>
 				</EuiFlexItem>
 				<EuiFlexItem>
-					<EuiFlexGroup gutterSize={dashGutters}>
+					<EuiFlexGroup gutterSize={DASHGUTTERS}>
 						<EuiFlexItem>
-							<DashPanel timing={50000} />
+							<DashPanel timing={5000} />
 						</EuiFlexItem>
 						<EuiFlexItem>
 							<DashPanel timing={2300} />
