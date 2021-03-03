@@ -55,7 +55,7 @@ const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
 		}
 
 		// Switch through dataset every {timing} interval
-		if (currentData < dataSet.length - 1) {
+		if (currentData < dataSet.length - 2) {
 			switchData = setTimeout(() => setCurrentData(currentData + 1), timing);
 		} else {
 			complete = setTimeout(() => setComplete(true), timing);
@@ -118,7 +118,12 @@ const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
 					{loading ? null : (
 						<EuiPanel color="plain" borderRadius="none" hasShadow={false}>
 							<EuiText color="subdued">
-								<ExampleChart timing={timing} data={dataSet[currentData]} />
+								<ExampleChart
+									timing={timing}
+									data={
+										complete ? dataSet[currentData + 1] : dataSet[currentData]
+									}
+								/>
 							</EuiText>
 						</EuiPanel>
 					)}
