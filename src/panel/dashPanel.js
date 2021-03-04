@@ -9,6 +9,7 @@ import {
 } from "@elastic/eui";
 
 import PanelActionMenu from "./panelActionMenu";
+import PanelInProgress from "./panelInProgress";
 
 const DashPanel = ({ panelTitle = "Panel", timing, Chart, dataSet }) => {
 	// States:
@@ -58,14 +59,26 @@ const DashPanel = ({ panelTitle = "Panel", timing, Chart, dataSet }) => {
 				minHeight: "15vh",
 			}}
 		>
-			{!panelComplete && (
-				<EuiProgress size="xs" color="text" position="absolute" />
-			)}
 			<EuiFlexGroup alignItems="center" style={{ height: "44px" }}>
 				<EuiFlexItem grow={true}>
-					<EuiText size="xs">
-						<h4>{panelTitle}</h4>
-					</EuiText>
+					<EuiFlexGroup
+						gutterSize={"none"}
+						alignItems="center"
+						justifyContent="flexStart"
+					>
+						<EuiFlexItem grow={false}>
+							<EuiText size="xs" color={panelComplete ? "default" : "subdued"}>
+								<h4>
+									{panelTitle} ({timing})
+								</h4>
+							</EuiText>
+						</EuiFlexItem>
+						{!panelComplete && (
+							<EuiFlexItem>
+								<PanelInProgress />
+							</EuiFlexItem>
+						)}
+					</EuiFlexGroup>
 				</EuiFlexItem>
 				<EuiFlexItem grow={false}>
 					<PanelActionMenu />

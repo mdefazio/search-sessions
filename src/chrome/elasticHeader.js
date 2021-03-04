@@ -196,15 +196,16 @@ export const ElasticHeader = ({ theme }) => {
 						items: [<ElasticLeftNav />, spacesMenu],
 						breadcrumbs: [
 							{
-								text: "Management",
+								text: "Dashboards",
 								onClick: () => {},
 							},
 							{
-								text: "Users",
+								text: "Partial Results Dashboard",
 							},
 						],
 						borders: "right",
 					},
+
 					{
 						items: [
 							<EuiHeaderLinks

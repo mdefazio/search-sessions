@@ -15,6 +15,26 @@ import { BarChartSimple, BarChartDataSet } from "./charts/barChartSimple";
 import { LineChartSimple, LineChartDataSet } from "./charts/lineChartSimple";
 const DASHGUTTERS = "s";
 
+const timings = [
+	800,
+	1000,
+	1200,
+	1500,
+	1800,
+	2000,
+	3000,
+	5000,
+	7000,
+	10000,
+	12000,
+];
+
+const getTiming = () => {
+	let timing = timings[Math.floor(Math.random() * timings.length)];
+	console.log(timing);
+	return timing;
+};
+
 function App() {
 	/* States to consider
   // Page reload: Reloads all components
@@ -83,47 +103,135 @@ function App() {
 
 		return (
 			<EuiFlexGroup direction="column" gutterSize={DASHGUTTERS}>
+				{/* Row */}
 				<EuiFlexItem>
 					<EuiFlexGroup gutterSize={DASHGUTTERS}>
 						<EuiFlexItem grow={1}>
 							<DashPanel
-								panelTitle="Panel 1 sec"
-								timing={1000}
+								panelTitle="Panel title"
+								timing={getTiming()}
 								Chart={BarChartSimple}
 								dataSet={BarChartDataSet}
 							/>
 						</EuiFlexItem>
 						<EuiFlexItem grow={2}>
 							<DashPanel
-								panelTitle="Panel 3 sec"
-								timing={3000}
+								panelTitle="Panel"
+								timing={getTiming()}
 								Chart={LineChartSimple}
 								dataSet={LineChartDataSet}
 							/>
 						</EuiFlexItem>
 						<EuiFlexItem grow={2}>
 							<DashPanel
-								panelTitle="Panel 2 sec"
-								timing={2000}
+								panelTitle="Panel"
+								timing={getTiming()}
 								Chart={BarChartSimple}
 								dataSet={BarChartDataSet}
 							/>
 						</EuiFlexItem>
 					</EuiFlexGroup>
 				</EuiFlexItem>
-				{/* <EuiFlexItem>
+				{/* End Row */}
+				{/* Row */}
+				<EuiFlexItem>
 					<EuiFlexGroup gutterSize={DASHGUTTERS}>
 						<EuiFlexItem grow={2}>
-							<DashPanel panelTitle="Panel 4 sec" timing={4000} />
+							<DashPanel
+								panelTitle="Panel"
+								timing={getTiming()}
+								Chart={LineChartSimple}
+								dataSet={LineChartDataSet}
+							/>
 						</EuiFlexItem>
 						<EuiFlexItem grow={1}>
-							<DashPanel panelTitle="Panel 6 sec" timing={6000} />
+							<DashPanel
+								panelTitle="Panel"
+								timing={getTiming()}
+								Chart={BarChartSimple}
+								dataSet={BarChartDataSet}
+							/>
 						</EuiFlexItem>
-						<EuiFlexItem grow={1}>
-							<DashPanel panelTitle="Panel 5 sec" timing={5000} />
+						<EuiFlexItem>
+							<EuiFlexGroup direction="column" gutterSize={DASHGUTTERS}>
+								<EuiFlexItem>
+									<DashPanel
+										panelTitle="Panel"
+										timing={getTiming()}
+										Chart={BarChartSimple}
+										dataSet={BarChartDataSet}
+									/>
+								</EuiFlexItem>
+								<EuiFlexItem grow={1}>
+									<DashPanel
+										panelTitle="Panel"
+										timing={getTiming()}
+										Chart={LineChartSimple}
+										dataSet={LineChartDataSet}
+									/>
+								</EuiFlexItem>
+							</EuiFlexGroup>
 						</EuiFlexItem>
 					</EuiFlexGroup>
-				</EuiFlexItem> */}
+				</EuiFlexItem>
+				{/* Row */}
+
+				<EuiFlexItem>
+					<EuiFlexGroup gutterSize={DASHGUTTERS}>
+						<EuiFlexItem grow={2}>
+							<DashPanel
+								panelTitle="Panel"
+								timing={getTiming()}
+								Chart={LineChartSimple}
+								dataSet={LineChartDataSet}
+							/>
+						</EuiFlexItem>
+						<EuiFlexItem grow={1}>
+							<DashPanel
+								panelTitle="Panel"
+								timing={getTiming()}
+								Chart={BarChartSimple}
+								dataSet={BarChartDataSet}
+							/>
+						</EuiFlexItem>
+						<EuiFlexItem>
+							<EuiFlexGroup direction="column" gutterSize={DASHGUTTERS}>
+								<EuiFlexItem>
+									<DashPanel
+										panelTitle="Panel"
+										timing={getTiming()}
+										Chart={BarChartSimple}
+										dataSet={BarChartDataSet}
+									/>
+								</EuiFlexItem>
+								<EuiFlexItem>
+									<DashPanel
+										panelTitle="Panel"
+										timing={getTiming()}
+										Chart={BarChartSimple}
+										dataSet={BarChartDataSet}
+									/>
+								</EuiFlexItem>
+							</EuiFlexGroup>
+						</EuiFlexItem>
+						<EuiFlexItem grow={1}>
+							<DashPanel
+								panelTitle="Panel"
+								timing={getTiming()}
+								Chart={BarChartSimple}
+								dataSet={BarChartDataSet}
+							/>
+						</EuiFlexItem>
+						<EuiFlexItem grow={1}>
+							<DashPanel
+								panelTitle="Panel"
+								timing={getTiming()}
+								Chart={BarChartSimple}
+								dataSet={BarChartDataSet}
+							/>
+						</EuiFlexItem>
+					</EuiFlexGroup>
+				</EuiFlexItem>
 			</EuiFlexGroup>
 		);
 	};
