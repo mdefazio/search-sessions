@@ -8,99 +8,57 @@ import {
 	EuiProgress,
 } from "@elastic/eui";
 
-import ExampleChart from "./panelChart";
 import PanelActionMenu from "./panelActionMenu";
 
-const data0 = [
-	{ x: "trousers", y: 0, val: 1222 },
-	{ x: "watches", y: 0, val: 1222 },
-	{ x: "bags", y: 0, val: 1222 },
-	{ x: "cocktail dresses", y: 0, val: 1222 },
-];
+const DashPanel = ({ panelTitle = "Panel", timing, Chart, dataSet }) => {
+	// States:
+	// Panel loading: loading icon in middle of panel, no chart
+	// Data loading: chart with progress bar atop panel
+	// Current data: (Partial results) cycle through provided data set to change chart values
+	// Panel complete
 
-const data1 = [
-	{ x: "trousers", y: 190, val: 1222 },
-	{ x: "watches", y: 4, val: 1222 },
-	{ x: "bags", y: 123, val: 1222 },
-	{ x: "cocktail dresses", y: 124, val: 1222 },
-];
-
-const data2 = [
-	{ x: "trousers", y: 390, val: 1222 },
-	{ x: "watches", y: 23, val: 1222 },
-	{ x: "bags", y: 750, val: 1222 },
-	{ x: "cocktail dresses", y: 854, val: 1222 },
-];
-
-const data3 = [
-	{ x: "trousers", y: 260, val: 1222 },
-	{ x: "watches", y: 64, val: 1222 },
-	{ x: "bags", y: 827, val: 1222 },
-	{ x: "cocktail dresses", y: 702, val: 1222 },
-];
-
-const dataSet = [data0, data1, data2, data3];
-
-const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
-	const [complete, setComplete] = useState(false);
-	const [loading, setLoading] = useState(true);
 	const [currentData, setCurrentData] = useState(0);
+	const [panelComplete, setPanelComplete] = useState(false);
+
+	const [loading, setLoading] = useState(true);
+
+	// When component is mounted, show as basic loading state (loading chart icon in center of panel)
+	// Clear after timing setting as passed
 
 	useEffect(() => {
-		let loading, switchData, complete;
-		loading = setTimeout(() => setLoading(false), timing / 2);
+		setTimeout(() => {
+			// Swap out Loading icon with Chart component
+			setLoading(false);
+			// Start interval of going through dataset
+			const interval = setInterval(() => {
+				setCurrentData((prev) => {
+					const next = prev + 1;
+					if (next < dataSet.length) {
+						return next;
+					} else {
+						clearInterval(interval);
+						setPanelComplete(true);
+						return prev;
+					}
+				});
+			}, timing);
+		}, timing);
+	}, []);
 
-		if (!loading) {
-			clearTimeout(loading);
-		}
-
-		// Switch through dataset every {timing} interval
-		if (currentData < dataSet.length - 2) {
-			switchData = setTimeout(() => setCurrentData(currentData + 1), timing);
-		} else {
-			complete = setTimeout(() => setComplete(true), timing);
-		}
-
-		return () => {
-			clearTimeout(switchData);
-			clearTimeout(complete);
-		};
-	}, [currentData, timing]);
-
-	if (loading) {
-		return (
-			<EuiPanel
-				color="plain"
-				borderRadius="none"
-				hasShadow={false}
-				paddingSize="l"
-				className="dashPanel--loading"
-			>
-				<EuiFlexGroup
-					alignItems="center"
-					justifyContent="center"
-					style={{ height: "100%" }}
-				>
-					<EuiFlexItem grow style={{ textAlign: "center" }}>
-						<EuiLoadingChart size="m" mono />
-					</EuiFlexItem>
-				</EuiFlexGroup>
-			</EuiPanel>
-		);
-	}
+	const PanelLoadingView = () => <EuiLoadingChart size="m" mono />;
 
 	return (
 		<EuiPanel
-			hasShadow={hasShadow}
+			hasShadow={loading ? false : true}
 			paddingSize="s"
-			className="dashPanel"
+			className={loading ? "dashPanel loading" : "dashPanel"}
 			style={{
 				position: "relative",
 				overflow: "hidden",
 				minHeight: "15vh",
 			}}
 		>
-			{complete ? null : (
+			{!panelComplete && (
 				<EuiProgress size="xs" color="text" position="absolute" />
 			)}
 			<EuiFlexGroup alignItems="center" style={{ height: "44px" }}>
@@ -113,19 +71,12 @@ const DashPanel = ({ panelTitle = "Panel", hasShadow, timing = 2000 }) => {
 					<PanelActionMenu />
 				</EuiFlexItem>
 			</EuiFlexGroup>
-			<EuiFlexGroup alignItems="stretch" style={{ height: "100%" }}>
-				<EuiFlexItem>
-					{loading ? null : (
-						<EuiPanel color="plain" borderRadius="none" hasShadow={false}>
-							<EuiText color="subdued">
-								<ExampleChart
-									timing={timing}
-									data={
-										complete ? dataSet[currentData + 1] : dataSet[currentData]
-									}
-								/>
-							</EuiText>
-						</EuiPanel>
+			<EuiFlexGroup alignItems="center" style={{ height: "100%" }}>
+				<EuiFlexItem style={{ textAlign: "center" }}>
+					{loading ? (
+						<PanelLoadingView />
+					) : (
+						<Chart data={dataSet[currentData]} />
 					)}
 				</EuiFlexItem>
 			</EuiFlexGroup>

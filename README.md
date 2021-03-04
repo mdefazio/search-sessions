@@ -1,5 +1,18 @@
 # Getting Started with Create React App
 
+# Partial Results Prototype
+
+The prototype attempts to demonstrate how we should indicate the loading process and partial results, specific to a dashboard.
+
+### Todos:
+
+[] Create additional charts
+[] Show progress bar atop panel when data is updating within panel
+[] Link up control bar buttons
+[] Recombine panel + chart into single component so states are linked
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

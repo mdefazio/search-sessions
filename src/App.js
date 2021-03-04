@@ -11,6 +11,8 @@ import {
 
 import DashPanel from "./panel/dashPanel";
 
+import { BarChartSimple, BarChartDataSet } from "./charts/barChartSimple";
+import { LineChartSimple, LineChartDataSet } from "./charts/lineChartSimple";
 const DASHGUTTERS = "s";
 
 function App() {
@@ -21,41 +23,51 @@ function App() {
   // Edit mode: Panel styling different
   */
 
-	const [isReloading, setIsReloading] = useState(true);
-	const [isDataLoading, setIsDataLoading] = useState(true);
-	const [isEditing, setIsEditing] = useState(false);
+	const [isPageReload, setIsPageReload] = useState(true);
+	const [isDataRefresh, setIsDataRefresh] = useState(true);
+	const [isEditMode, setIsEditMode] = useState(false);
 
-	const onEditClick = () => setIsEditing((isEditing) => !isEditing);
-	const onReloadClick = () => setIsReloading((isReloading) => !isReloading);
+	const onEditClick = () => setIsEditMode((isEditMode) => !isEditMode);
+	const onReloadClick = () => setIsPageReload((isPageReload) => !isPageReload);
 
 	const Controls = () => (
 		<EuiFlexGroup justifyContent="flexEnd">
 			<EuiFlexItem grow={false}>
 				<EuiButton onClick={onReloadClick} size="s">
-					Reload
+					Page Reload
+				</EuiButton>
+			</EuiFlexItem>
+			<EuiFlexItem grow={false}>
+				<EuiButton onClick={onReloadClick} fill={isEditMode} size="s">
+					New Query
 				</EuiButton>
 			</EuiFlexItem>
 			<EuiFlexItem grow={false}>
 				<EuiButton
 					onClick={onReloadClick}
-					fill={isEditing}
+					fill={isEditMode}
 					color="secondary"
 					size="s"
 				>
-					New Query
+					Data refresh
 				</EuiButton>
 			</EuiFlexItem>
 			<EuiFlexItem grow={false}>
-				<EuiButton onClick={onEditClick} fill={isEditing} size="s" color="text">
-					{isEditing ? "Preview" : "Edit Dashboard"}
+				<EuiButton
+					onClick={onEditClick}
+					fill={isEditMode}
+					size="s"
+					color="text"
+				>
+					{isEditMode ? "Preview" : "Edit Dashboard"}
 				</EuiButton>
 			</EuiFlexItem>
 		</EuiFlexGroup>
 	);
 
 	const Dashboard = () => {
-		if (isReloading) {
-			setTimeout(() => setIsReloading(false), 1500);
+		if (isPageReload) {
+			setTimeout(() => setIsPageReload(false), 1500);
 			return (
 				<EuiFlexGroup
 					alignItems="center"
@@ -74,54 +86,50 @@ function App() {
 				<EuiFlexItem>
 					<EuiFlexGroup gutterSize={DASHGUTTERS}>
 						<EuiFlexItem grow={1}>
-							<DashPanel panelTitle="panel 1" timing={8000} />
+							<DashPanel
+								panelTitle="Panel 1 sec"
+								timing={1000}
+								Chart={BarChartSimple}
+								dataSet={BarChartDataSet}
+							/>
 						</EuiFlexItem>
 						<EuiFlexItem grow={2}>
-							<DashPanel panelTitle="panel 2" timing={6400} />
+							<DashPanel
+								panelTitle="Panel 3 sec"
+								timing={3000}
+								Chart={LineChartSimple}
+								dataSet={LineChartDataSet}
+							/>
 						</EuiFlexItem>
-						<EuiFlexItem>
-							<DashPanel panelTitle="panel 3" timing={3000} />
-						</EuiFlexItem>
-						<EuiFlexItem grow={3}>
-							<DashPanel panelTitle="panel 4" timing={1400} />
+						<EuiFlexItem grow={2}>
+							<DashPanel
+								panelTitle="Panel 2 sec"
+								timing={2000}
+								Chart={BarChartSimple}
+								dataSet={BarChartDataSet}
+							/>
 						</EuiFlexItem>
 					</EuiFlexGroup>
 				</EuiFlexItem>
-				<EuiFlexItem>
+				{/* <EuiFlexItem>
 					<EuiFlexGroup gutterSize={DASHGUTTERS}>
-						<EuiFlexItem>
-							<DashPanel panelTitle="panel 5" timing={1900} />
+						<EuiFlexItem grow={2}>
+							<DashPanel panelTitle="Panel 4 sec" timing={4000} />
 						</EuiFlexItem>
-						<EuiFlexItem>
-							<DashPanel panelTitle="panel 6" timing={6200} />
+						<EuiFlexItem grow={1}>
+							<DashPanel panelTitle="Panel 6 sec" timing={6000} />
 						</EuiFlexItem>
-						<EuiFlexItem>
-							<DashPanel panelTitle="panel 7" timing={4300} />
-						</EuiFlexItem>
-					</EuiFlexGroup>
-				</EuiFlexItem>
-				<EuiFlexItem>
-					<EuiFlexGroup gutterSize={DASHGUTTERS}>
-						<EuiFlexItem>
-							<DashPanel timing={5000} />
-						</EuiFlexItem>
-						<EuiFlexItem>
-							<DashPanel timing={2300} />
-						</EuiFlexItem>
-						<EuiFlexItem>
-							<DashPanel timing={3300} />
-						</EuiFlexItem>
-						<EuiFlexItem>
-							<DashPanel timing={5200} />
+						<EuiFlexItem grow={1}>
+							<DashPanel panelTitle="Panel 5 sec" timing={5000} />
 						</EuiFlexItem>
 					</EuiFlexGroup>
-				</EuiFlexItem>
+				</EuiFlexItem> */}
 			</EuiFlexGroup>
 		);
 	};
 
 	return (
-		<EuiPage className={isEditing ? "editMode" : ""}>
+		<EuiPage className={isEditMode ? "editMode" : ""}>
 			<EuiFlexGroup direction="column" gutterSize="l">
 				<EuiFlexItem>
 					<Controls />
