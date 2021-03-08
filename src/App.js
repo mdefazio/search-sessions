@@ -13,9 +13,9 @@ import DashPanel from "./panel/dashPanel";
 
 import { BarChartSimple, BarChartDataSet } from "./charts/barChartSimple";
 import { LineChartSimple, LineChartDataSet } from "./charts/lineChartSimple";
-const DASHGUTTERS = "s";
 
-const timings = [
+const DASHGUTTERS = "s";
+const TIMINGS = [
 	800,
 	1000,
 	1200,
@@ -30,7 +30,7 @@ const timings = [
 ];
 
 const getTiming = () => {
-	let timing = timings[Math.floor(Math.random() * timings.length)];
+	let timing = TIMINGS[Math.floor(Math.random() * TIMINGS.length)];
 	console.log(timing);
 	return timing;
 };
