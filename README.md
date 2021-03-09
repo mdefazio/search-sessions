@@ -7,7 +7,8 @@ The prototype attempts to demonstrate how we should indicate the loading process
 ### Todos:
 
 [] Create additional charts
-[] Show progress bar atop panel when data is updating within panel
+[] Show ~progress bar atop panel~ session icon when data is updating within panel
+[] Show saved session icon in breadcrumb
 [] Link up control bar buttons
 [] Recombine panel + chart into single component so states are linked
 

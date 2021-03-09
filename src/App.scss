@@ -58,6 +58,11 @@ body {
 	}
 }
 
+.editMode .dashboardPanel {
+	box-shadow: none;
+	border: solid 2px rgba($euiColorLightShade, 0.4);
+}
+
 .euiProgress--customColor {
 	background-color: $euiColorLightestShade;
 }

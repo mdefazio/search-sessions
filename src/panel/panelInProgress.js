@@ -11,7 +11,7 @@ import {
 
 import { LoadingIconSVG } from "../loadingIcon";
 
-const PanelInProgress = () => {
+const PanelInProgress = ({ start, end }) => {
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	const onButtonClick = () =>
@@ -42,7 +42,7 @@ const PanelInProgress = () => {
 				</EuiFlexItem>
 				<EuiFlexItem>
 					<EuiText size="xs" color="subdued">
-						4 of 9 shards complete
+						{start} of {end} shards loaded
 					</EuiText>
 				</EuiFlexItem>
 			</EuiFlexGroup>
