@@ -7,16 +7,49 @@ import {
 	EuiFlexItem,
 	EuiButton,
 	EuiLoadingChart,
+	EuiButtonGroup,
 } from "@elastic/eui";
 
 import Dashboard from "./dashboard";
 
-function App() {
+const panelOptionButtons = [
+	{
+		id: 0,
+		label: "Progress",
+	},
+	{
+		id: 1,
+		label: "Progress + Icon",
+	},
+	{
+		id: 2,
+		label: "Icon only",
+	},
+	{
+		id: 3,
+		label: "Badge",
+	},
+];
+
+const App = () => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const [isEditMode, setIsEditMode] = useState(false);
+	const [dataRefresh, setDataRefresh] = useState(true);
+	const [isThemed, setIsThemed] = useState(false);
+	const [panelOptionID, setPanelOptionID] = useState(0);
 
 	const onEditClick = () => setIsEditMode((isEditMode) => !isEditMode);
 	const onReloadClick = () => setIsLoaded((isLoaded) => !isLoaded);
+	const onThemeClick = () => setIsThemed((isThemed) => !isThemed);
+
+	const onDataRefreshClick = () => {
+		setDataRefresh((dataRefresh) => !dataRefresh);
+		setTimeout(() => setDataRefresh(true), 0);
+	};
+
+	const onPanelButtonChange = (optionId) => {
+		setPanelOptionID(optionId);
+	};
 
 	const LoadingScreen = () => {
 		if (!isLoaded) {
@@ -39,18 +72,30 @@ function App() {
 
 	const Controls = () => (
 		<EuiFlexGroup justifyContent="flexEnd">
+			<EuiFlexItem>
+				<EuiButtonGroup
+					options={panelOptionButtons}
+					onChange={onPanelButtonChange}
+					idSelected={panelOptionID}
+				/>
+			</EuiFlexItem>
 			<EuiFlexItem grow={false}>
-				<EuiButton onClick={onReloadClick} size="s">
+				<EuiButton onClick={onThemeClick} color="text" size="s">
+					Theme Dashboard
+				</EuiButton>
+			</EuiFlexItem>
+			<EuiFlexItem grow={false}>
+				<EuiButton onClick={onReloadClick} color="danger" size="s">
 					Page Reload
 				</EuiButton>
 			</EuiFlexItem>
 			<EuiFlexItem grow={false}>
-				<EuiButton onClick={onReloadClick} size="s">
+				<EuiButton onClick={onReloadClick} color="warning" size="s">
 					New Query
 				</EuiButton>
 			</EuiFlexItem>
 			<EuiFlexItem grow={false}>
-				<EuiButton onClick={onReloadClick} color="secondary" size="s">
+				<EuiButton onClick={onDataRefreshClick} color="secondary" size="s">
 					Data refresh
 				</EuiButton>
 			</EuiFlexItem>
@@ -59,7 +104,7 @@ function App() {
 					onClick={onEditClick}
 					fill={isEditMode}
 					size="s"
-					color="text"
+					color="primary"
 				>
 					{isEditMode ? "Preview" : "Edit Dashboard"}
 				</EuiButton>
@@ -75,11 +120,17 @@ function App() {
 				</EuiFlexItem>
 				<EuiFlexItem>
 					<LoadingScreen />
-					{isLoaded && <Dashboard isEditing={isEditMode} />}
+					{isLoaded && dataRefresh && (
+						<Dashboard
+							isEditing={isEditMode}
+							isThemed={isThemed}
+							panelType={panelOptionID}
+						/>
+					)}
 				</EuiFlexItem>
 			</EuiFlexGroup>
 		</EuiPage>
 	);
-}
+};
 
 export default App;

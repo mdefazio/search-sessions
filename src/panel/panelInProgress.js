@@ -7,18 +7,19 @@ import {
 	EuiProgress,
 	EuiText,
 	EuiLoadingSpinner,
+	EuiBadge,
 } from "@elastic/eui";
 
 import { LoadingIconSVG } from "../loadingIcon";
 
-const PanelInProgress = ({ start, end }) => {
+const PanelInProgress = ({ animate, start, end, useButton = true }) => {
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	const onButtonClick = () =>
 		setIsPopoverOpen((isPopoverOpen) => !isPopoverOpen);
 	const closePopover = () => setIsPopoverOpen(false);
 
-	const PanelProgressButton = (
+	const PopoverButton = (
 		<EuiButtonIcon
 			iconType={LoadingIconSVG}
 			color="subdued"
@@ -27,14 +28,15 @@ const PanelInProgress = ({ start, end }) => {
 			isLoading={true}
 		/>
 	);
+	const PopoverBadge = <EuiBadge onClick={onButtonClick}>Loading</EuiBadge>;
 
 	return (
 		<EuiPopover
 			ownFocus
-			button={PanelProgressButton}
+			button={useButton ? PopoverButton : PopoverBadge}
 			isOpen={isPopoverOpen}
 			closePopover={closePopover}
-			className="progressMenuButton"
+			className={["progressMenuButton", animate ? "animate" : ""]}
 		>
 			<EuiFlexGroup direction="column" gutterSize="s">
 				<EuiFlexItem>
@@ -42,7 +44,7 @@ const PanelInProgress = ({ start, end }) => {
 				</EuiFlexItem>
 				<EuiFlexItem>
 					<EuiText size="xs" color="subdued">
-						{start} of {end} shards loaded
+						{start + 1} of {end + 1} shards loaded
 					</EuiText>
 				</EuiFlexItem>
 			</EuiFlexGroup>

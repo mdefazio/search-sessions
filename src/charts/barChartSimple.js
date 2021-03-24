@@ -3,10 +3,10 @@ import { Axis, BarSeries, Chart, Settings, ScaleType } from "@elastic/charts";
 import "@elastic/charts/dist/theme_only_light.css";
 
 const data0 = [
-	{ x: "trousers", y: 0, val: 1222 },
-	{ x: "watches", y: 0, val: 1222 },
-	{ x: "bags", y: 0, val: 1222 },
-	{ x: "cocktail dresses", y: 0, val: 1222 },
+	{ x: "trousers", y: 33, val: 1222 },
+	{ x: "watches", y: 16, val: 1222 },
+	{ x: "bags", y: 88, val: 1222 },
+	{ x: "cocktail dresses", y: 268, val: 1222 },
 ];
 
 const data1 = [
@@ -32,11 +32,11 @@ const data3 = [
 
 export const BarChartDataSet = [data0, data1, data2, data3];
 
-export const BarChartSimple = ({ data }) => {
+export const BarChartSimple = ({ data, showLegend = false }) => {
 	return (
 		<div>
-			<Chart size={{ height: 200 }}>
-				<Settings showLegend={false} />
+			<Chart size={{ height: 400 }}>
+				<Settings showLegend={showLegend ? true : false} />
 				<BarSeries
 					id="bars"
 					name="Simple bar series"
@@ -45,8 +45,8 @@ export const BarChartSimple = ({ data }) => {
 					xAccessor="x"
 					yAccessors={["y"]}
 				/>
-				<Axis id="bottom-axis" position="bottom" />
-				<Axis id="left-axis" position="left" showGridLines />
+				<Axis id="bottom-axis" position="bottom" title="x axis" />
+				<Axis id="left-axis" position="left" showGridLines title="y axis" />
 			</Chart>
 		</div>
 	);

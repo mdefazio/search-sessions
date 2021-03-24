@@ -39,15 +39,15 @@ body {
 	}
 }
 
-.dashPanel .actionMenuButton {
+.dashboardPanel .actionMenuButton {
 	display: none;
 }
-.dashPanel:hover .actionMenuButton,
+.dashboardPanel:hover .actionMenuButton,
 .euiPopover-isOpen.actionMenuButton {
 	display: block !important;
 }
 
-.editMode .dashPanel {
+.editMode .dashboardPanel {
 	box-shadow: none;
 	border: solid 2px rgba($euiColorLightShade, 0.4);
 
@@ -63,11 +63,11 @@ body {
 	border: solid 2px rgba($euiColorLightShade, 0.4);
 }
 
-.euiProgress--customColor {
-	background-color: $euiColorLightestShade;
+.dashboardPanel .panelTitle.loading h4 {
+	color: $euiColorMediumShade;
 }
 
-.progressMenuButton {
+.progressMenuButton.animate {
 	animation: fadeLoop 1.5s cubic-bezier(0.3, 0, 0.4, 1);
 	animation-iteration-count: infinite;
 }
@@ -75,3 +75,11 @@ body {
 // .euiProgress--customColor.euiProgress--indeterminate:before {
 // 	background-color: $euiColorLightShade !important;
 // }
+
+
+.euiHeaderBreadcrumbs {
+	flex-grow: 0;
+}
+.euiHeaderSection--dontGrow:nth-of-type(2) {
+	flex-grow: 1 !important;
+}

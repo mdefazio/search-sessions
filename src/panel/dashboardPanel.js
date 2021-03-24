@@ -5,23 +5,25 @@ import {
 	EuiFlexItem,
 	EuiBadge,
 	EuiText,
+	EuiIcon,
+	EuiToolTip,
+	EuiButtonIcon,
+	EuiLoadingChart,
+	EuiProgress,
 } from "@elastic/eui";
 
 import PanelActionMenu from "./panelActionMenu";
 import PanelInProgress from "./panelInProgress";
-import { LoadingIconSVG } from "../loadingIcon";
-
-const ChartPH = ({ data }) => (
-	<EuiText>
-		<p>{data}</p>
-	</EuiText>
-);
 
 const DashboardPanel = ({
 	panelTitle = "Panel title",
+	isThemed,
 	timing,
 	Chart,
 	dataSet,
+	hasError,
+	panelType,
+	showLegend,
 }) => {
 	const [currentData, setCurrentData] = useState(0);
 	const [dataIsComplete, setIsDataIsComplete] = useState(false);
@@ -37,42 +39,132 @@ const DashboardPanel = ({
 		}
 	}, [currentData]);
 
-	return (
-		<EuiPanel className="dashboardPanel" paddingSize="s">
-			<EuiFlexGroup justifyContent="spaceBetween">
-				<EuiFlexItem grow={false}>
-					<EuiFlexGroup
-						justifyContent="flexStart"
-						gutterSize="xs"
-						alignItems="center"
-					>
-						<EuiFlexItem grow={false}>
+	const PanelHeader = () => (
+		<EuiFlexGroup
+			alignItems="center"
+			gutterSize="none"
+			justifyContent="spaceBetween"
+		>
+			<EuiFlexItem grow={false}>
+				<EuiFlexGroup gutterSize="xs" style={{ height: "32px" }}>
+					{/* Panel title */}
+					{!isThemed && (
+						<EuiFlexItem>
 							<EuiText
 								size="s"
-								className={dataIsComplete ? "complete" : "loading"}
+								grow={false}
+								className={[
+									"panelTitle",
+									dataIsComplete ? "complete" : "loading",
+								]}
 							>
 								<h4>{panelTitle}</h4>
 							</EuiText>
 						</EuiFlexItem>
+					)}
 
-						{!dataIsComplete && (
-							<EuiFlexItem>
+					{/* Show session loading icon */}
+					{!dataIsComplete && (
+						<EuiFlexItem grow={false}>
+							{panelType === 0 && (
+								<EuiProgress size="xs" color="#98A2B3" position="absolute" />
+							)}
+
+							{panelType === 1 && (
 								<PanelInProgress start={currentData} end={dataSet.length - 1} />
-							</EuiFlexItem>
-						)}
-						{!dataIsComplete && (
-							<EuiFlexItem>
-								<EuiBadge color="hollow">Loading</EuiBadge>
-							</EuiFlexItem>
-						)}
-					</EuiFlexGroup>
-				</EuiFlexItem>
+							)}
 
+							{panelType === 1 && (
+								<EuiProgress size="xs" color="#98A2B3" position="absolute" />
+							)}
+
+							{panelType === 2 && (
+								<PanelInProgress
+									start={currentData}
+									end={dataSet.length - 1}
+									animate
+								/>
+							)}
+
+							{panelType === 3 && (
+								<PanelInProgress
+									start={currentData}
+									end={dataSet.length - 1}
+									animate={false}
+									useButton={false}
+								/>
+							)}
+						</EuiFlexItem>
+					)}
+
+					{/* Show error icon */}
+					{dataIsComplete && hasError && (
+						<EuiFlexItem grow={false}>
+							<EuiToolTip position="top" content="This data may be incomplete">
+								<EuiButtonIcon iconType="alert" color="danger" />
+							</EuiToolTip>
+						</EuiFlexItem>
+					)}
+				</EuiFlexGroup>
+			</EuiFlexItem>
+			{/* Panel Action Menu */}
+			<EuiFlexItem grow={false}>
+				<PanelActionMenu />
+			</EuiFlexItem>
+		</EuiFlexGroup>
+	);
+
+	const Visualization = ({ showLegend }) => {
+		if (currentData < 0) {
+			return (
+				<EuiPanel
+					hasShadow={false}
+					hasBorder={false}
+					color="plain"
+					borderRadius="none"
+					style={{ textAlign: "center" }}
+					grow
+				>
+					<EuiFlexGroup
+						style={{ height: "100%" }}
+						justifyContent="center"
+						alignItems="center"
+						direction="column"
+						gutterSize="none"
+					>
+						<EuiFlexItem grow={false}>
+							<EuiLoadingChart mono size="m" />
+						</EuiFlexItem>
+					</EuiFlexGroup>
+				</EuiPanel>
+			);
+		} else {
+			return <Chart data={dataSet[currentData]} showLegend={showLegend} />;
+		}
+	};
+
+	return (
+		<EuiPanel
+			className="dashboardPanel"
+			paddingSize="s"
+			hasShadow={isThemed ? false : true}
+			hasBorder={isThemed ? true : false}
+			borderRadius={isThemed ? "none" : "m"}
+			style={{ position: "relative", overflow: "hidden" }}
+		>
+			<EuiFlexGroup
+				direction="column"
+				justifyContent="flexStart"
+				style={{ height: "100%" }}
+				gutterSize="none"
+			>
 				<EuiFlexItem grow={false}>
-					<PanelActionMenu />
+					<PanelHeader />
+				</EuiFlexItem>
+				<EuiFlexItem grow>
+					<Visualization showLegend={showLegend} />
 				</EuiFlexItem>
 			</EuiFlexGroup>
-			<Chart data={dataSet[currentData]} />
 		</EuiPanel>
 	);
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { EuiButtonIcon, EuiPopover } from "@elastic/eui";
+import { Link } from "react-router-dom";
 
 const PanelActionMenu = () => {
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -24,7 +25,7 @@ const PanelActionMenu = () => {
 			closePopover={closePopover}
 			className="actionMenuButton"
 		>
-			Action menu here...
+			<Link to="./maximize-panel">Maximize panel</Link>
 		</EuiPopover>
 	);
 };

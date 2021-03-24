@@ -11,17 +11,17 @@ import {
 	EuiShowFor,
 	EuiText,
 	EuiBadge,
-	EuiProgress,
 	EuiSelectableTemplateSitewide,
 	EuiSelectableMessage,
 	EuiButtonIcon,
+	EuiHeaderSection,
 	EuiHeaderSectionItem,
-	EuiFlexGroup,
-	EuiFlexItem,
 } from "@elastic/eui";
 
 import { ElasticLeftNav } from "./leftNav/index";
 import { LoadingIconSVG } from "../loadingIcon";
+
+const 
 
 export const ElasticHeader = ({ theme }) => {
 	/**
@@ -72,6 +72,26 @@ export const ElasticHeader = ({ theme }) => {
 			</div>
 		</EuiPopover>
 	);
+
+	const renderBreadcrumbs = () => {
+    const breadcrumbs = [
+      {
+        text: 'Dashboards',
+        href: '#',
+      },
+      {
+        text: 'Partial Results',
+      },
+    ];
+
+    return (
+      <EuiHeaderBreadcrumbs
+        aria-label="Header breadcrumbs example"
+        breadcrumbs={breadcrumbs}
+      />
+    );
+  };
+
 
 	/**
 	 * Spaces Menu
@@ -136,16 +156,9 @@ export const ElasticHeader = ({ theme }) => {
 			anchorPosition="downRight"
 			closePopover={() => setIsSessionMenuVisible(false)}
 		>
-			<EuiFlexGroup direction="column" gutterSize="s">
-				<EuiFlexItem>
-					<EuiProgress size="xs" color="accent" />
-				</EuiFlexItem>
-				<EuiFlexItem>
-					<EuiText size="s" color="subdued">
-						<p>Loading 2 of 4 shards</p>
-					</EuiText>
-				</EuiFlexItem>
-			</EuiFlexGroup>
+			<EuiText size="s" color="subdued">
+				<p>Show loading indicator with shards</p>
+			</EuiText>
 		</EuiPopover>
 	);
 
@@ -181,63 +194,36 @@ export const ElasticHeader = ({ theme }) => {
 
 	return (
 		<>
-			<EuiHeader
+	<EuiHeader
 				theme="dark"
 				position="fixed"
-				sections={[
-					{
-						items: [
-							<EuiHeaderLogo iconType="logoElastic">Elastic</EuiHeaderLogo>,
-						],
-						borders: "none",
-					},
-					{
-						items: [<EuiShowFor sizes={["m", "l", "xl"]}>{search}</EuiShowFor>],
-						borders: "none",
-					},
-					{
-						items: [
-							<EuiShowFor sizes={["xs", "s"]}>{search}</EuiShowFor>,
-							alertMenu,
-							userMenu,
-						],
-						borders: "none",
-					},
-				]}
 			/>
-			<EuiHeader
-				position="fixed"
-				sections={[
-					{
-						items: [<ElasticLeftNav />, spacesMenu],
-						breadcrumbs: [
-							{
-								text: "Dashboards",
-								onClick: () => {},
-							},
-							{
-								text: "Partial Results Dashboard",
-							},
-						],
-						borders: "right",
-					},
-					{
-						items: [sessionMenu],
-					},
-					{
-						items: [
-							<EuiHeaderLinks
-								popoverProps={{
-									repositionOnScroll: true, // Necessary when placing search in a fixed component
-								}}
-							>
-								<EuiHeaderLink color="primary">Share</EuiHeaderLink>
-								<EuiHeaderLink color="primary">Clone</EuiHeaderLink>
-							</EuiHeaderLinks>,
-						],
-					},
-				]}
-			/>
+			<EuiHeaderSection>
+			<EuiHeaderLogo iconType="logoElastic">Elastic</EuiHeaderLogo>
+			</EuiHeaderSection>
+		</EuiHeader>
+
+		<EuiHeader position="fixed">
+			<EuiHeaderSection>
+				<EuiHeaderSectionItem>
+				<ElasticLeftNav />
+				</EuiHeaderSectionItem>
+				<EuiHeaderSectionItem>
+				{spacesMenu}
+				</EuiHeaderSectionItem>	
+			</EuiHeaderSection>
+
+			{renderBreadcrumbs()}
+
+			<EuiHeaderSection side="right">
+				<EuiHeaderSectionItem>
+				<EuiShowFor sizes={["xs", "s"]}>{search}</EuiShowFor>				
+				</EuiHeaderSectionItem>
+				<EuiHeaderSectionItem>{alertMenu}</EuiHeaderSectionItem>
+				<EuiHeaderSectionItem>{userMenu}</EuiHeaderSectionItem>
+			</EuiHeaderSection>
+		</EuiHeader>
+		
 		</>
 	);
 };
