@@ -3,17 +3,15 @@ import {
 	EuiPanel,
 	EuiFlexGroup,
 	EuiFlexItem,
-	EuiBadge,
 	EuiText,
-	EuiIcon,
-	EuiToolTip,
-	EuiButtonIcon,
 	EuiLoadingChart,
 	EuiProgress,
+	EuiBadge,
 } from "@elastic/eui";
 
 import PanelActionMenu from "./panelActionMenu";
 import PanelInProgress from "./panelInProgress";
+import PanelHasError from "./panelHasError";
 
 const DashboardPanel = ({
 	panelTitle = "Panel title",
@@ -22,6 +20,7 @@ const DashboardPanel = ({
 	Chart,
 	dataSet,
 	hasError,
+	hasTimeRange,
 	panelType,
 	showLegend,
 }) => {
@@ -62,6 +61,11 @@ const DashboardPanel = ({
 							</EuiText>
 						</EuiFlexItem>
 					)}
+					{hasTimeRange && (
+						<EuiFlexItem>
+							<EuiBadge iconType="calendar">Last 2 weeks</EuiBadge>
+						</EuiFlexItem>
+					)}
 
 					{/* Show session loading icon */}
 					{!dataIsComplete && (
@@ -99,11 +103,12 @@ const DashboardPanel = ({
 
 					{/* Show error icon */}
 					{dataIsComplete && hasError && (
-						<EuiFlexItem grow={false}>
-							<EuiToolTip position="top" content="This data may be incomplete">
-								<EuiButtonIcon iconType="alert" color="danger" />
-							</EuiToolTip>
-						</EuiFlexItem>
+						<PanelHasError
+							start={currentData}
+							end={dataSet.length - 1}
+							animate={false}
+							useButton={false}
+						/>
 					)}
 				</EuiFlexGroup>
 			</EuiFlexItem>
@@ -161,7 +166,7 @@ const DashboardPanel = ({
 				<EuiFlexItem grow={false}>
 					<PanelHeader />
 				</EuiFlexItem>
-				<EuiFlexItem grow>
+				<EuiFlexItem grow className="chart-fadeIn">
 					<Visualization showLegend={showLegend} />
 				</EuiFlexItem>
 			</EuiFlexGroup>

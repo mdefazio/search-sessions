@@ -85,7 +85,7 @@ export const LineChartDataSet = [data0, data1, data2];
 
 export const LineChartSimple = ({ data, showLegend = false }) => {
 	return (
-		<Chart size={{ height: 400 }}>
+		<Chart size={{ height: 400 }} className="chart-fadeInAlt">
 			<Settings showLegend={showLegend ? true : false} />
 			<Axis
 				id="bottom"

@@ -47,6 +47,7 @@ const Dashboard = ({ isEditing, isThemed, panelType }) => {
 							isThemed={isThemed}
 							panelType={panelType}
 							showLegend
+							hasTimeRange
 						/>
 					</EuiFlexItem>
 					<EuiFlexItem>

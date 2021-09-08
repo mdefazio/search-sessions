@@ -10,7 +10,6 @@ import {
 	EuiPopover,
 	EuiShowFor,
 	EuiText,
-	EuiBadge,
 	EuiProgress,
 	EuiSelectableTemplateSitewide,
 	EuiSelectableMessage,

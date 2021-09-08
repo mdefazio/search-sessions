@@ -5,6 +5,23 @@ body {
 	@include euiHeaderAffordForFixed(95px);
 }
 
+@keyframes fadein {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@keyframes fadeinalt {
+	from {
+		opacity: 0.5;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
 .dashPanel,
 .dashPanel--loading {
 	transition: background-color $euiAnimSpeedNormal $euiAnimSlightResistance,
@@ -14,15 +31,6 @@ body {
 	-ms-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Internet Explorer */
 	-o-animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance; /* Opera < 12.1 */
 	animation: fadein $euiAnimSpeedSlow $euiAnimSlightResistance;
-}
-
-@keyframes fadein {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
 }
 
 @keyframes fadeLoop {
@@ -76,10 +84,16 @@ body {
 // 	background-color: $euiColorLightShade !important;
 // }
 
-
 .euiHeaderBreadcrumbs {
 	flex-grow: 0;
 }
 .euiHeaderSection--dontGrow:nth-of-type(2) {
 	flex-grow: 1 !important;
+}
+
+.chart-fadeIn {
+	animation: fadein $euiAnimSpeedExtraSlow $euiAnimSlightResistance;
+}
+.chart-fadeInAlt {
+	animation: fadeinalt $euiAnimSpeedExtraSlow $euiAnimSlightResistance;
 }

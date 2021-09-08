@@ -4,14 +4,13 @@ import {
 	EuiPopover,
 	EuiFlexItem,
 	EuiFlexGroup,
-	EuiProgress,
 	EuiText,
 	EuiBadge,
 } from "@elastic/eui";
 
-import { LoadingIconSVG, LoadingIcon } from "../loadingIcon";
+import { LoadingIconSVG } from "../loadingIcon";
 
-const PanelInProgress = ({ animate, start, end, useButton = true }) => {
+const PanelHasError = ({ animate, start, end, useButton = true }) => {
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
 	const onButtonClick = () =>
@@ -27,38 +26,29 @@ const PanelInProgress = ({ animate, start, end, useButton = true }) => {
 			isLoading={true}
 		/>
 	);
-	const PopoverLoadingBadge = (
+	const PopoverErrorBadge = (
 		<EuiBadge
-			color="hollow"
+			color="danger"
 			onClick={onButtonClick}
 			style={{ position: "relative" }}
+			iconType="alert"
 		>
-			<EuiFlexGroup alignItems="center" gutterSize="s">
-				<EuiFlexItem>
-					<LoadingIcon size="xs" />
-				</EuiFlexItem>
-				{/* <EuiFlexItem>Loading</EuiFlexItem> */}
-			</EuiFlexGroup>
-
-			{/* <EuiProgress size="xs" position="absolute" color="subdued" /> */}
+			Error
 		</EuiBadge>
 	);
 
 	return (
 		<EuiPopover
 			ownFocus
-			button={useButton ? PopoverButton : PopoverLoadingBadge}
+			button={useButton ? PopoverButton : PopoverErrorBadge}
 			isOpen={isPopoverOpen}
 			closePopover={closePopover}
 			className={["progressMenuButton", animate ? "animate" : ""]}
 		>
 			<EuiFlexGroup direction="column" gutterSize="s">
 				<EuiFlexItem>
-					<EuiProgress size="xs" />
-				</EuiFlexItem>
-				<EuiFlexItem>
 					<EuiText size="xs" color="subdued">
-						{start + 1} of {end + 1} shards loaded
+						{start - 1} of {end + 1} shards loaded
 					</EuiText>
 				</EuiFlexItem>
 			</EuiFlexGroup>
@@ -66,4 +56,4 @@ const PanelInProgress = ({ animate, start, end, useButton = true }) => {
 	);
 };
 
-export default PanelInProgress;
+export default PanelHasError;

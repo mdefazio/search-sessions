@@ -6,11 +6,7 @@ import {
 	EuiPage,
 	EuiFlexGroup,
 	EuiFlexItem,
-	EuiButton,
-	EuiLoadingChart,
 	EuiResizableContainer,
-	EuiResizableButton,
-	EuiResizablePanel,
 	EuiListGroup,
 	EuiListGroupItem,
 } from "@elastic/eui";

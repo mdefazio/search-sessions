@@ -34,20 +34,18 @@ export const BarChartDataSet = [data0, data1, data2, data3];
 
 export const BarChartSimple = ({ data, showLegend = false }) => {
 	return (
-		<div>
-			<Chart size={{ height: 400 }}>
-				<Settings showLegend={showLegend ? true : false} />
-				<BarSeries
-					id="bars"
-					name="Simple bar series"
-					xScaleType={ScaleType.Ordinal}
-					data={data}
-					xAccessor="x"
-					yAccessors={["y"]}
-				/>
-				<Axis id="bottom-axis" position="bottom" title="x axis" />
-				<Axis id="left-axis" position="left" showGridLines title="y axis" />
-			</Chart>
-		</div>
+		<Chart size={{ height: 400 }} className="chart-fadeInAlt">
+			<Settings showLegend={showLegend ? true : false} />
+			<BarSeries
+				id="bars"
+				name="Simple bar series"
+				xScaleType={ScaleType.Ordinal}
+				data={data}
+				xAccessor="x"
+				yAccessors={["y"]}
+			/>
+			<Axis id="bottom-axis" position="bottom" title="x axis" />
+			<Axis id="left-axis" position="left" showGridLines title="y axis" />
+		</Chart>
 	);
 };

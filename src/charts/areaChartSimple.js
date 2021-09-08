@@ -99,21 +99,19 @@ export const AreaChartDataSet = [data0, data1, data2, data3];
 
 export const AreaChartSimple = ({ data, showLegend = false }) => {
 	return (
-		<div>
-			<Chart size={{ height: 400 }}>
-				<Settings showLegend={showLegend ? true : false} />
-				<AreaSeries
-					id="area"
-					name="Area chart"
-					xScaleType={ScaleType.Time}
-					yScaleType={ScaleType.Linear}
-					xAccessor={0}
-					yAccessors={[1]}
-					data={data}
-				/>
-				<Axis id="bottom-axis" position="bottom" title="x axis" />
-				<Axis id="left-axis" position="left" showGridLines title="y axis" />
-			</Chart>
-		</div>
+		<Chart size={{ height: 400 }} className="chart-fadeInAlt">
+			<Settings showLegend={showLegend ? true : false} />
+			<AreaSeries
+				id="area"
+				name="Area chart"
+				xScaleType={ScaleType.Time}
+				yScaleType={ScaleType.Linear}
+				xAccessor={0}
+				yAccessors={[1]}
+				data={data}
+			/>
+			<Axis id="bottom-axis" position="bottom" title="x axis" />
+			<Axis id="left-axis" position="left" showGridLines title="y axis" />
+		</Chart>
 	);
 };
