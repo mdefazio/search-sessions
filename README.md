@@ -1,5 +1,3 @@
-# Getting Started with Create React App
-
 # Partial Results Prototype
 
 The prototype attempts to demonstrate how we should indicate the loading process and partial results, specific to a dashboard.
